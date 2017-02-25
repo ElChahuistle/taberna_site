@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 from django.db import models
 
@@ -10,16 +11,21 @@ class Tipo(models.Model):
 
 
 class Pais_de_Origen(models.Model):
-    name = models.CharField('Pais', max_length=15)
+    name = models.CharField(
+        max_length=15
+        , verbose_name='Pais'
+    )
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Pais_de_Origen'
+        verbose_name_plural = 'Paises de Origen'
+
+
 class Ceveceria(models.Model):
-    ceveceria = models.CharField(
-        'Cerveceria'
-        , max_length=25
-    )
+    ceveceria = models.CharField(max_length=25)
     pais_de_origen = models.ForeignKey(Pais_de_Origen)
 
     def __str__(self):
@@ -47,6 +53,8 @@ class Cerveza(models.Model):
 
     def existencia(self):
         return self.on_hand > 0
+
+    existencia.boolean = True
 
 
 class Mostrar(models.Model):
