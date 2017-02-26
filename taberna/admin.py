@@ -1,12 +1,39 @@
 from django.contrib import admin
+"""from django.forms import TextInput
+from django.db import models"""
 from .models import Tipo, Pais_de_Origen, Ceveceria, Cerveza, Caracteristica
 
 
 class PaisDeOrigenAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
+
 class CervezaAdmin(admin.ModelAdmin):
-    list_display = ('name', 'cerveceria', 'precio', 'existencia')
+    list_display = ('name', 'cerveceria', 'existencia')
+    fieldsets = [
+        (None
+            , {'fields': [
+                'name'
+                , 'cerveceria'
+            ]}
+         )
+        , ('Detalles'
+           , {'fields': [
+                'tipo'
+                , 'grados'
+                , 'caracteristicas'
+            ]}
+        )
+        , ('Inventario'
+           , {'fields': [
+                ('precio_compra', 'precio_venta')
+                , 'disponible'
+            ]}
+        )
+    ]
+
+    class Media:
+        css = { 'all': ('cerveza_form.css', ) }
 
 
 class CerveceriaAdmin(admin.ModelAdmin):

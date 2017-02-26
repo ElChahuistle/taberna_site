@@ -55,7 +55,7 @@ ROOT_URLCONF = 'taberna_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['taberna/static/admin/',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -20,7 +20,7 @@ class Pais_de_Origen(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Pais_de_Origen'
+        verbose_name = 'Pais de Origen'
         verbose_name_plural = 'Paises de Origen'
 
 
@@ -38,6 +38,10 @@ class Caracteristica(models.Model):
     def __str__(self):
         return self.caracteristica
 
+    class Meta:
+        verbose_name = 'Caracteristica'
+        verbose_name_plural = 'Caracteristicas'
+
 
 class Cerveza(models.Model):
     name = models.CharField(max_length=25)
@@ -45,22 +49,25 @@ class Cerveza(models.Model):
     cerveceria = models.ForeignKey(Ceveceria)
     caracteristicas = models.ManyToManyField(Caracteristica)
     grados = models.CharField(max_length=5)
-    precio = models.FloatField(default=0)
-    on_hand = models.IntegerField(default=0)
+    precio_compra = models.FloatField(default=0)
+    precio_venta = models.FloatField(default=0)
+    disponible = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
     def existencia(self):
-        return self.on_hand > 0
+        return self.disponible > 0
 
     existencia.boolean = True
+    existencia.verbose_name = 'Hay Disponile?'
 
 
 class Mostrar(models.Model):
-    cerveza = models.ForeignKey(Cerveza)
+    cerveza = models.OneToOneField(Cerveza, primary_key=True)
     mostrar = models.BooleanField(default=False)
     orden = models.IntegerField(default=1)
 
     def mostrar_cerveza(self):
         return self.cerveza.existencia()
+
