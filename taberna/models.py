@@ -78,6 +78,9 @@ class PresentacionCerveza(models.Model):
     precio = models.FloatField(default=0)
     disponible = models.FloatField(default=0)
 
+    def __str__(self):
+        return ''
+
     class Meta:
         verbose_name = 'Presentacion de Cervezas'
         verbose_name_plural = 'Presentacion de Cervezas'
