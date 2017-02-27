@@ -51,7 +51,7 @@ class Presentacion(models.Model):
     presentacion = models.CharField(max_length=2, choices=PRESENTACIONES)
 
     def __str__(self):
-        return self.presentacion
+        return self.get_presentacion_display()
 
 
 class Cerveza(models.Model):
@@ -78,6 +78,9 @@ class PresentacionCerveza(models.Model):
     precio = models.FloatField(default=0)
     disponible = models.FloatField(default=0)
 
+    class Meta:
+        verbose_name = 'Presentacion de Cervezas'
+        verbose_name_plural = 'Presentacion de Cervezas'
 
 class Mostrar(models.Model):
     cerveza = models.OneToOneField(Cerveza, primary_key=True)
