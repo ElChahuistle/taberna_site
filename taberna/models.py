@@ -43,15 +43,24 @@ class Caracteristica(models.Model):
         verbose_name_plural = 'Caracteristicas'
 
 
+class Presentacion(models.Model):
+    PRESENTACIONES = (
+        ('BA', 'Barril')
+        , ('BO', 'Botella')
+    )
+    presentacion = models.CharField(max_length=2, choices=PRESENTACIONES)
+
+    def __str__(self):
+        return self.presentacion
+
+
 class Cerveza(models.Model):
     name = models.CharField(max_length=25)
     tipo = models.ForeignKey(Tipo)
     cerveceria = models.ForeignKey(Ceveceria)
     caracteristicas = models.ManyToManyField(Caracteristica)
     grados = models.CharField(max_length=5)
-    precio_compra = models.FloatField(default=0)
-    precio_venta = models.FloatField(default=0)
-    disponible = models.IntegerField(default=0)
+    presentaciones = models.ManyToManyField(Presentacion, through='PresentacionCerveza')
 
     def __str__(self):
         return self.name
@@ -61,6 +70,13 @@ class Cerveza(models.Model):
 
     existencia.boolean = True
     existencia.verbose_name = 'Hay Disponile?'
+
+
+class PresentacionCerveza(models.Model):
+    cerveza = models.ForeignKey(Cerveza, on_delete=models.CASCADE)
+    presentacion = models.ForeignKey(Presentacion, on_delete=models.CASCADE)
+    precio = models.FloatField(default=0)
+    disponible = models.FloatField(default=0)
 
 
 class Mostrar(models.Model):
